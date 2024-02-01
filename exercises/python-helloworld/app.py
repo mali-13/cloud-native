@@ -1,4 +1,5 @@
 import json
+import logging
 
 from flask import Flask
 
@@ -7,11 +8,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
+    app.logger.info("hello endpoint called")
     return "Hello World!"
 
 
 @app.route("/status")
 def status():
+    app.logger.info("status endpoint called")
     response = app.response_class(
         response=json.dumps({"result": "OK - healthy"}),
         status=200,
@@ -22,6 +25,7 @@ def status():
 
 @app.route("/metrics")
 def metrics():
+    app.logger.info("metrics endpoint called")
     response = app.response_class(
         response=json.dumps(
             {
@@ -37,4 +41,5 @@ def metrics():
 
 
 if __name__ == "__main__":
+    logging.basicConfig(filename="app.log", level=logging.DEBUG)
     app.run(host="0.0.0.0")
