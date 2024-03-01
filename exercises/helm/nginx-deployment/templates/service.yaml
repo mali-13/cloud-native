@@ -5,13 +5,13 @@ metadata:
     app: nginx
     tag: alpine
   name: nginx-alpine
-  namespace: { { .Values.namespace.name } }
+  namespace: {{ .Values.namespace.name }}
 spec:
   ports:
-    - port: { { .Values.service.port } }
+    - port: {{ .Values.service.port }}
       protocol: TCP
-      targetPort: { { .Values.service.port } }
+      targetPort: {{ .Values.service.port }}
   selector:
     app: nginx
     tag: alpine
-  type: { { .Values.service.type } }
+  type: {{ .Values.service.type }}
