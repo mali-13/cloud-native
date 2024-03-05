@@ -1,8 +1,9 @@
 name: TechTrends - Package with Docker
 
 on:
-  push: [ main ]
-
+  push:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
