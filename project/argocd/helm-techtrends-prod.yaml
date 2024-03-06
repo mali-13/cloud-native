@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: python-helloworld
+  name: techtrends-prod
   namespace: argocd
 spec:
   destination:
@@ -9,7 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: project/argocd/python-manifests
+    helm:
+      valueFiles:
+        - values-prod.yaml
+    path: project/helm
     repoURL: https://github.com/mali-13/cloud-native
     targetRevision: HEAD
-  syncPolicy: { }
