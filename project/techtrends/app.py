@@ -10,6 +10,7 @@ from flask import (
     url_for,
     redirect,
     flash,
+    make_response,
 )
 
 
@@ -96,8 +97,16 @@ def create():
 
 @app.route("/healthz")
 def healthz():
-    health = {"result": "OK - healthy"}
-    return jsonify(health)
+    connection = get_db_connection()
+    posts_table_exists = connection.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='posts'"
+    ).fetchone()
+    connection.close()
+
+    if posts_table_exists is None:
+        return make_response(jsonify({"result": "ERROR - unhealthy"}), 500)
+
+    return jsonify({"result": "OK - healthy"})
 
 
 @app.route("/metrics")
